@@ -1,61 +1,48 @@
-var ButtonToolbar = ReactBootstrap.ButtonToolbar;
-var Button = ReactBootstrap.Button;
-var FormGroup = ReactBootstrap.FormGroup;
-var ControlLabel = ReactBootstrap.ControlLabel;
-var FormControl = ReactBootstrap.FormControl;
-var Thumbnail = ReactBootstrap.Thumbnail;
-var Navbar = ReactBootstrap.Navbar;
-var Jumbotron = ReactBootstrap.Jumbotron;
-var Image = ReactBootstrap.Image;
-
-var spotifyApi = new SpotifyWebApi();
-
 // Main view 
 const Main = React.createClass({
-  getInitialState() {
-    return {
-      artists: []
-    };
-  },
+    getInitialState() {
+        return {
+            artists: []
+        };
+    },
 
-  updateSelectedArtist(artist) {
+    updateSelectedArtist(artist) {
 
-  	var self = this;
-  	spotifyApi.getArtistAlbums(artist.uri.split(":")[2])
-		  .then(function(data) {
+        var self = this;
+        spotifyApi.getArtistAlbums(artist.uri.split(":")[2])
+            .then(function(data) {
 
-		  	self.refs['selectedArtist'].setState({albums: data.items, selectedArtist: artist, index: 0});
+                self.refs['selectedArtist'].setState({ albums: data.items, selectedArtist: artist, index: 0 });
+                self.refs['selectedArtist'].stopMusic();
+                window.scrollTo(0, 0);
+            }, function(err) {
+                console.error(err);
+            });
 
-		  	window.scrollTo(0,0);
-		  }, function(err) {
-		    console.error(err);
-		  });
+    },
 
-  	
-  },
+    search(value) {
 
-  search(value) {
+        var self = this;
 
-  	var self = this;
+        spotifyApi.searchArtists(value)
+            .then(function(data) {
+                console.log('Search artists by ' + value, data);
 
-	spotifyApi.searchArtists(value)
-		  .then(function(data) {
-		    console.log('Search artists by ' + value , data);
+                self.setState({ artists: data.artists.items });
+                self.updateSelectedArtist(data.artists.items[0]);
 
-		    self.setState({artists: data.artists.items});
-			self.updateSelectedArtist(data.artists.items[0]);
+            }, function(err) {
+                console.error(err);
+            });
 
-		  }, function(err) {
-		    console.error(err);
-		  });
-  	
-  },
+    },
 
 
-  render() {
-    var self = this;
-    return (
-        <div id= "main">
+    render() {
+        var self = this;
+        return (
+            <div id= "main">
         	<Header searchCallback = {this.search}></Header>
 
         	<SelectedArtist ref= "selectedArtist"/>
@@ -68,8 +55,8 @@ const Main = React.createClass({
 	        }
 	        </div>
         </div>
-    );
-  }
+        );
+    }
 });
 
 

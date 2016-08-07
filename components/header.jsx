@@ -4,24 +4,24 @@ var FormControl = ReactBootstrap.FormControl;
 var Navbar = ReactBootstrap.Navbar;
 
 Header = React.createClass({
-  getInitialState() {
-    return {
-    	value: ''
-    };
-  },
+    getInitialState() {
+        return {
+            value: ''
+        };
+    },
 
-  handleChange(e) {
-    this.setState({ value: e.target.value });
-  },
+    handleChange(e) {
+        this.setState({ value: e.target.value });
+    },
 
-  handleSearch() {
-  	if(this.state.value.length > 0)
-  		this.props.searchCallback(this.state.value);
-  },
+    handleSearch() {
+        if (this.state.value.length > 0)
+            this.props.searchCallback(this.state.value);
+    },
 
-  render() {
-    return (
-			<Navbar>
+    render() {
+        return (
+            <Navbar>
 			    <Navbar.Header>
 			      <Navbar.Brand>
 			        <a href="#">Find your favorite Artists!</a>
@@ -38,12 +38,6 @@ Header = React.createClass({
 			      </Navbar.Form>
 			    </Navbar.Collapse>
 			</Navbar>
-    );
-  }
+        );
+    }
 });
-
-
-
-
-
-
