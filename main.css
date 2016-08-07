@@ -1,0 +1,16 @@
+.artist {
+	
+	display: inline-block;
+}
+
+#artists {
+	text-align: center;
+}
+
+.jumbotron {
+	padding: 50px;
+}
+
+.carousel {
+	width: 300px;
+}
