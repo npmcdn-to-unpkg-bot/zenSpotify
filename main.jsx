@@ -6,6 +6,10 @@ const Main = React.createClass({
         };
     },
 
+    componentWillMount() {
+    	this.search("clean");
+    },
+
     updateSelectedArtist(artist) {
 
         var self = this;
@@ -41,6 +45,7 @@ const Main = React.createClass({
 
     render() {
         var self = this;
+
         return (
             <div id= "main">
         	<Header searchCallback = {this.search}></Header>
